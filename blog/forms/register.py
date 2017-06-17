@@ -2,12 +2,11 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators
 from blog.models import Users
 
-class LoginForm(FlaskForm):
-    pass
-
-class RegistrUser(FlaskForm):
-    username = StringField('Username', [validators.Length(min=1, max=50)])
-    email = StringField('Email', [validators.Email(message='NO')])
+class RegisterUser(FlaskForm):
+    username = StringField('Username', [validators.Length(min=1, max=50), validators.DataRequired(
+        message=''
+    )])
+    email = StringField('Email', [validators.Email(message='NO'), validators.DataRequired()])
     password = PasswordField('Password', [validators.Length(min=1)])
 
     def validate(self):
