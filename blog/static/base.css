@@ -1,0 +1,10 @@
+.line li {
+	border-bottom: solid 1px #ccc;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.line li:last-child {
+	border-bottom: none;
+	padding-bottom:0;
+}

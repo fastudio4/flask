@@ -1,42 +1,44 @@
-from blog import db
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime
+from blog.database import Base
 
-class Users(db.Model):
+class Users(Base):
     __tablename__ = 'users'
-    user_id = db.Column(db.Integer, primary_key=True)
-    user_name = db.Column(db.String(50), unique=True)
-    user_email = db.Column(db.String(50), unique=True)
-    user_password = db.Column(db.String(50))
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50), unique=True)
+    email = Column(String(50), unique=True)
+    password = Column(String(50))
 
-    def __init__(self, user_name, user_email, user_password):
-        self.user_name = user_name
-        self.user_email = user_email
-        self.user_password = user_password
+    def __init__(self, name, email, password):
+        self.name = name
+        self.email = email
+        self.password = password
 
-class Article(db.Model):
+
+class Article(Base):
     __tablename__ = 'articles'
-    article_id = db.Column(db.Integer, primary_key=True)
-    article_title = db.Column(db.String(100), unique=True)
-    article_description = db.Column(db.Text)
-    article_author = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    article_create = db.Column(db.DateTime, default=None)
-    article_like = db.Column(db.Integer, default=0)
+    id = Column(Integer, primary_key=True)
+    title = Column(String(100), unique=True)
+    description = Column(Text)
+    author = Column(Integer, ForeignKey('users.id'))
+    created_at = Column(DateTime, default=None)
+    like = Column(Integer, default=0)
 
-    def __init__(self, article_title, article_description, article_author, article_create):
-        self.article_title = article_title
-        self.article_description = article_description
-        self.article_author = article_author
-        self.article_create = article_create
+    def __init__(self, title, description, author, create):
+        self.title = title
+        self.description = description
+        self.author = author
+        self.create = create
 
-class Comments(db.Model):
+class Comments(Base):
     __tablename__ = 'comments'
-    comment_id = db.Column(db.Integer, primary_key=True)
-    comment_text = db.Column(db.Text)
-    comment_time = db.Column(db.DateTime)
-    comment_article = db.Column(db.Integer, db.ForeignKey('articles.article_id'))
-    comment_user = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    id = Column(Integer, primary_key=True)
+    text = Column(Text)
+    time = Column(DateTime)
+    article = Column(Integer, ForeignKey('articles.id'))
+    user = Column(Integer, ForeignKey('users.id'))
 
-    def __init__(self, comment_text, comment_time, comment_article, comment_user):
-        self.comment_text = comment_text
-        self.comment_time = comment_time
-        self.comment_article = comment_article
-        self.comment_user = comment_user
+    def __init__(self, text, time, article, user):
+        self.text = text
+        self.time = time
+        self.article = article
+        self.user = user
