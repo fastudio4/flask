@@ -10,6 +10,7 @@ login.init_app(blog)
 login.login_view = 'login'
 
 from blog.database import db_session, init_db
+
 from blog import forms, views
 init_db()
 @blog.teardown_appcontext

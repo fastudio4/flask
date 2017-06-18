@@ -26,5 +26,7 @@ def register():
 def login():
     form = LoginUser(request.form)
     if request.method == 'POST' and form.validate():
+        login_user(form.name.data)
+        flash('You login in site')
         return redirect('/')
     return render_template('login.html', form=form, title='Login form')
