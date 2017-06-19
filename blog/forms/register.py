@@ -17,4 +17,5 @@ class RegisterUser(FlaskForm):
         if user_ex is not None:
             self.email.errors.append('Email is already in use')
             return False
+
         return True

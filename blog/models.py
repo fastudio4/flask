@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, Boolean
 from blog.database import Base
 
 class Users(Base):
@@ -7,12 +7,17 @@ class Users(Base):
     name = Column(String(50), unique=True)
     email = Column(String(50), unique=True)
     password = Column(String(50))
+    is_authenticated = Column(Boolean, default=False)
+    is_active = Column(Boolean, default=False)
+    is_anonymous = Column(Boolean, default=False)
 
     def __init__(self, name, email, password):
         self.name = name
         self.email = email
         self.password = password
 
+    def get_id(self):
+        return str(self.id)
 
 class Article(Base):
     __tablename__ = 'articles'
