@@ -33,3 +33,9 @@ def login():
         flash('You login in site')
         return redirect('/')
     return render_template('login.html', form=form, title='Login form')
+
+@blog.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect('/login')

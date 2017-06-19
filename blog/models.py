@@ -7,17 +7,23 @@ class Users(Base):
     name = Column(String(50), unique=True)
     email = Column(String(50), unique=True)
     password = Column(String(50))
-    is_authenticated = Column(Boolean, default=False)
-    is_active = Column(Boolean, default=False)
-    is_anonymous = Column(Boolean, default=False)
 
     def __init__(self, name, email, password):
         self.name = name
         self.email = email
         self.password = password
 
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
     def get_id(self):
-        return str(self.id)
+        return self.name
 
 class Article(Base):
     __tablename__ = 'articles'
@@ -26,13 +32,12 @@ class Article(Base):
     description = Column(Text)
     author = Column(Integer, ForeignKey('users.id'))
     created_at = Column(DateTime, default=None)
-    like = Column(Integer, default=0)
 
-    def __init__(self, title, description, author, create):
+    def __init__(self, title, description, author, created_at):
         self.title = title
         self.description = description
         self.author = author
-        self.create = create
+        self.created_at = created_at
 
 class Comments(Base):
     __tablename__ = 'comments'
