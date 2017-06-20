@@ -52,7 +52,7 @@ class Article(Base):
 class Comments(Base):
     __tablename__ = 'comments'
     id = Column(Integer, primary_key=True)
-    text = Column(Text)
+    text = Column(String)
     time = Column(DateTime)
     article = Column(Integer, ForeignKey('articles.id'))
     user = Column(Integer, ForeignKey('users.id'))

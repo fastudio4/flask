@@ -41,6 +41,7 @@ def logout():
 
 @blog.route('/blog/<slug_title>')
 def article(slug_title):
+    # comments_form = CommentsArticle(request.form)
     article = Article.query.filter_by(slug=slug_title).first()
     return render_template('article.html', article=article, title=article.title)
 
@@ -78,3 +79,4 @@ def delete_article(slug_title):
     db_session.delete(article)
     db_session.commit()
     return redirect('/')
+
