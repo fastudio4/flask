@@ -1,6 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, TextAreaField, validators
 from blog.models import Article
 
 class UpdateArticle(FlaskForm):
-    pass
+    title = StringField('Title', [
+        validators.Length(min=1),
+        validators.DataRequired(message='This field must not be empty')
+    ])
+    description = TextAreaField('Description', [
+        validators.Length(min=1),
+        validators.DataRequired(message='This field must not be empty')
+    ])

@@ -55,11 +55,19 @@ def new_article():
         return redirect('/index')
     return render_template('new.html', form=form, title='New article')
 
-@blog.route('/update/<slug_title>')
+@blog.route('/update/<slug_title>', methods=['GET', 'POST'])
 @login_required
 def update_article(slug_title):
     article = Article.query.filter_by(slug=slug_title).first()
-
+    form = UpdateArticle()
+    form.title.data = article.title
+    form.description.data = article.description
+    if request.method == 'POST' and form.validate_on_submit():
+        article.title = form.title.data
+        article.description = form.description.data
+        db_session.commit()
+        return redirect('/blog/%s' % article.slug)
+    return render_template('article_update.html', article=article, form=form, title='%s update' % article.title)
 
 @blog.route('/logout')
 @login_required
