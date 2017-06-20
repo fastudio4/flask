@@ -17,7 +17,10 @@
     <div class="form-group">
         {{form.description(class="form-control", rows=8)}}
     </div>
-    <p><input type="submit" class="btn btn-primary" value="Submit"></p>
+    <p>
+        <input type="submit" class="btn btn-primary" value="Submit">
+        <a class="btn btn-default" href="/blog/{{ article.slug }}">Cancel</a>
+    </p>
     {% if form.description.errors %}
         <ul class="errors">
             {% for error in form.description.errors %}

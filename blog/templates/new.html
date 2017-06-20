@@ -14,7 +14,7 @@
             {% endfor %}</ul>
     {% endif %}
     <div class="form-group">
-        {{form.description(class="form-control")}}
+        {{form.description(class="form-control", rows=8)}}
     </div>
     <p><input type="submit" class="btn btn-primary" value="Submit"></p>
     {% if form.description.errors %}

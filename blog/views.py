@@ -59,11 +59,11 @@ def new_article():
 @login_required
 def update_article(slug_title):
     article = Article.query.filter_by(slug=slug_title).first()
-    form_out = UpdateArticle()
+    form_out = UpdateArticle(request.form)
     form_out.title.data = article.title
     form_out.description.data = article.description
     if request.method == 'POST':
-        form_in = UpdateArticle()
+        form_in = UpdateArticle(request.form)
         if form_in.validate_on_submit():
             article.title = form_in.title.data
             article.description = form_in.description.data
@@ -71,7 +71,10 @@ def update_article(slug_title):
             return redirect('/blog/%s' % article.slug)
     return render_template('article_update.html', article=article, form=form_out, title='Update article')
 
-@blog.route('/logout')
+@blog.route('/delete_article/<slug_title>')
 @login_required
-def delete_article():
-    pass
+def delete_article(slug_title):
+    article = Article.query.filter_by(slug=slug_title).first()
+    db_session.delete(article)
+    db_session.commit()
+    return redirect('/')

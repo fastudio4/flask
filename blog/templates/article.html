@@ -2,8 +2,12 @@
 {% block title %}{{title}}{% endblock %}
 {% block content %}
 <div>
-    <h1>{{article.title}}</h1><a href="/update/{{article.slug}}">Update</a>
+    <h1>{{article.title}}
+        <a class="btn btn-default" href="/update/{{article.slug}}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a class="btn btn-default" href="/delete_article/{{ article.slug }}"><span class="glyphicon glyphicon-trash"></span></a>
+    </h1>
     <p>{{article.description}}</p>
 
 </div>
 {% endblock %}
+
