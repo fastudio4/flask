@@ -29,13 +29,22 @@ def login():
     form = LoginUser(request.form)
     if request.method == 'POST' and form.validate():
         user = Users.query.filter_by(name=form.name.data).first()
-        login_user(user)
+        login_user(user, remember=form.remember.data)
         flash('You login in site')
         return redirect('/')
     return render_template('login.html', form=form, title='Login form')
 
-@blog.route("/logout")
+@blog.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect('/login')
+
+def add_article():
+    pass
+
+def update_article():
+    pass
+
+def delete_article():
+    pass

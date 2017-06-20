@@ -1,10 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, validators
+from wtforms import StringField, PasswordField, BooleanField, validators
 from blog.models import Users
 
 class LoginUser(FlaskForm):
     name = StringField('Username', [validators.Length(min=1, max=50), validators.DataRequired()])
-    password = PasswordField('Password', [validators.Length(min=6), validators.DataRequired()])
+    password = PasswordField('Password', [validators.Length(min=6, max=80), validators.DataRequired()])
+    remember = BooleanField('remember me')
 
     def validate(self):
         rv = FlaskForm.validate(self)

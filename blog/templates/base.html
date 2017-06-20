@@ -23,11 +23,11 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_authenticated %}
-                    <li><a href="/logout">Hi {{ current_user.name }}!</a></li>
+                    <li><a href="/logout">Logout ({{ current_user.name }})</a></li>
 
-                    {% endif %}
-
+                    {% else %}
                     <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
+                    {% endif %}
                     <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                 </ul>
             </div>
