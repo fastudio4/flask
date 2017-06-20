@@ -1,6 +1,5 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, validators
-from blog.models import Article
 
 class UpdateArticle(FlaskForm):
     title = StringField('Title', [

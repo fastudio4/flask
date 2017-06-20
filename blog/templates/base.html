@@ -21,11 +21,14 @@
                 <a class="navbar-brand" href="/index"><span class="glyphicon glyphicon-off"></span> First Flask</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
-                {% if current_user.is_authenticated %}
+
                 <ul class="nav navbar-nav">
+                    <li><a href="/">Blog</a></li>
+                    {% if current_user.is_authenticated %}
                     <li><a href="/new">New article</a></li>
+                    {% endif %}
                 </ul>
-                {% endif %}
+
 
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_authenticated %}
