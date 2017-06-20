@@ -59,15 +59,17 @@ def new_article():
 @login_required
 def update_article(slug_title):
     article = Article.query.filter_by(slug=slug_title).first()
-    form = UpdateArticle()
-    form.title.data = article.title
-    form.description.data = article.description
-    if request.method == 'POST' and form.validate_on_submit():
-        article.title = form.title.data
-        article.description = form.description.data
-        db_session.commit()
-        return redirect('/blog/%s' % article.slug)
-    return render_template('article_update.html', article=article, form=form, title='%s update' % article.title)
+    form_out = UpdateArticle()
+    form_out.title.data = article.title
+    form_out.description.data = article.description
+    if request.method == 'POST':
+        form_in = UpdateArticle()
+        if form_in.validate_on_submit():
+            article.title = form_in.title.data
+            article.description = form_in.description.data
+            db_session.commit()
+            return redirect('/blog/%s' % article.slug)
+    return render_template('article_update.html', article=article, form=form_out, title='Update article')
 
 @blog.route('/logout')
 @login_required

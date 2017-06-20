@@ -2,8 +2,8 @@
 {% block title %}{{title}}{% endblock %}
 {% block content %}
 <div>
-    <h1>{{article.title}}</h1>
+    <h1>{{article.title}}</h1><a href="/update/{{article.slug}}">Update</a>
     <p>{{article.description}}</p>
-    <a href="/update/{{article.slug}}">Update</a>
+
 </div>
 {% endblock %}
