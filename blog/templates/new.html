@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+<h3>New article</h3>
+<form action="" method="post">
+    {{form.hidden_tag()}}
+    <div class="form-group">
+        {{form.title(class="form-control", placeholder="Title article")}}
+    </div>
+    {% if form.title.errors %}
+        <ul class="errors">
+            {% for error in form.title.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}</ul>
+    {% endif %}
+    <div class="form-group">
+        {{form.description(class="form-control")}}
+    </div>
+    <p><input type="submit" class="btn btn-primary" value="Submit"></p>
+    {% if form.description.errors %}
+        <ul class="errors">
+            {% for error in form.description.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}</ul>
+    {% endif %}
+</form>
+{% endblock %}
