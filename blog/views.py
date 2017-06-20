@@ -3,13 +3,14 @@ from flask import render_template, redirect, flash, session, url_for, request, g
 from flask_login import login_user, logout_user, current_user, login_required
 from blog.forms import *
 from .models import Users, Article
-from . import blog, log, db_session
+from . import blog, db_session
 
 
 @blog.route('/')
 @blog.route('/index')
 def home():
-    return render_template('index.html')
+    articles = Article.query.all()
+    return render_template('index.html', articles=articles)
 
 @blog.route('/register', methods=['GET', 'POST'])
 def register():
@@ -19,7 +20,6 @@ def register():
         db_session.add(user)
         db_session.commit()
         login_user(user)
-        flash('You registered, please enter site')
         return redirect('/')
     return render_template('register.html', form=form, title='Register form')
 
@@ -30,7 +30,6 @@ def login():
     if request.method == 'POST' and form.validate():
         user = Users.query.filter_by(name=form.name.data).first()
         login_user(user, remember=form.remember.data)
-        flash('You login in site')
         return redirect('/')
     return render_template('login.html', form=form, title='Login form')
 
@@ -39,6 +38,11 @@ def login():
 def logout():
     logout_user()
     return redirect('/login')
+
+@blog.route('/blog/<slug_title>')
+def article(slug_title):
+    article = Article.query.filter_by(slug=slug_title).first()
+    return render_template('article.html', article=article, title=article.title)
 
 @blog.route('/new', methods=['GET', 'POST'])
 @login_required
@@ -51,10 +55,11 @@ def new_article():
         return redirect('/index')
     return render_template('new.html', form=form, title='New article')
 
-@blog.route('/logout')
+@blog.route('/update/<slug_title>')
 @login_required
-def update_article():
-    pass
+def update_article(slug_title):
+    article = Article.query.filter_by(slug=slug_title).first()
+
 
 @blog.route('/logout')
 @login_required
