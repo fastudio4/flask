@@ -7,7 +7,36 @@
         <a class="btn btn-default" href="/delete_article/{{ article.slug }}"><span class="glyphicon glyphicon-trash"></span></a>
     </h1>
     <p>{{article.description}}</p>
-
+    {% if current_user.is_authenticated %}
+            <form method="post">
+                {{form.hidden_tag()}}
+                <div class="form-group">
+                    {{ form.comments(class="form-control", rows=4) }}
+                </div>
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </form>
+        {% if form.comments.errors %}
+            <ul class="errors">
+                {% for error in form.comments.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+    {% if comments %}
+        <p>Comments:</p>
+        {% for comment in comments %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-user"></span> {{ comment.user }} |
+                    <small><span class="glyphicon glyphicon-time"></span> {{ comment.time.strftime('%d-%m-%Y %H:%M')}}</small>
+                </div>
+                <div class="panel-body">
+                    {{ comment.text }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}
 
